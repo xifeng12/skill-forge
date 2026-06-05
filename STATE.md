@@ -7,29 +7,41 @@
 
 ## Current Task
 
-Upgrade skill-forge from v1.1.0 to v1.2.0+
+v2.0 darwin-skill re-assessment and optimization (2026-06-05)
 
 ## Progress
 
-- [x] **P0: Core Self-Coherence Fix**
+- [x] **P0: Core Self-Coherence Fix** (2026-05-02)
   - [x] Darwin-skill baseline assessment: 78.0 (dim7 weakest at 4.0)
   - [x] SKILL.md refactor: numbered steps → Outcome/Constraints/Signals
   - [x] Commit: `eaf2820` on branch `auto-optimize/20260502-skill-forge`
   - [x] Darwin-skill re-assessment: 86.7 (dim7 improved to 7.5)
   - [x] Ratchet rule: PASSED (86.7 > 78.0)
 
-- [x] **P1: AI Behavior Constraint Enhancement**
+- [x] **P1: AI Behavior Constraint Enhancement** (2026-05-02)
   - [x] Update root AGENTS.md (Rule 11–13)
   - [x] Update skill-forge/AGENTS.md (self-check output format)
 
-- [x] **P2: State Persistence Mechanism**
+- [x] **P2: State Persistence Mechanism** (2026-05-02)
   - [x] Create this STATE.md file
   - [x] Update skill-forge/AGENTS.md to reference STATE.md
 
-- [x] **P3: AGENTS.md Mechanism Optimization**
+- [x] **P3: AGENTS.md Mechanism Optimization** (2026-05-02)
   - [x] Plan Mode constraints in root AGENTS.md (Rule 12)
   - [x] Uncertainty escalation meta-rule (Rule 13)
   - [x] Adapted Karpathy guidelines (Rule 14 + Rule 5 surgical precision)
+
+- [x] **P4: v2.0 darwin-skill re-assessment** (2026-06-05)
+  - [x] git init in skill-forge (was non-git, v2.0 requires git)
+  - [x] Baseline commit `2246b41` (v1.3.0 working tree snapshot)
+  - [x] Branch: `auto-optimize/20260605-skill-forge-v2`
+  - [x] v2.0 9-dim baseline: **83.0/99** (dim4=2 design conflict, dim8 single-agent sim)
+  - [x] 元 skill 自洽性附加: 4.5/5 + 1 软警告 (L128 user-initiated 解释)
+  - [x] Round 1 (`eabfd46`): dim9 +1.0 → 84.0
+  - [x] Round 2 (`acbf9e4`): dim1 +0.5 → 84.5
+  - [x] 触顶信号触发: 连续 2 轮 Δ<2 → 见好就收 break
+  - [x] Result card 归档: `F:\tmp\darwin-archived-2026-06-05\result-cards\skill-forge-v2.0.html`
+  - [x] 0 revert, 100% keep rate
 
 ## Blockers
 
@@ -37,15 +49,19 @@ None.
 
 ## Next Step
 
-**优化循环已完成，当前分数 85.2。**
+**v2.0 优化已完成，84.5/99 (v2.0 9-dim) + 触顶收工。**
 
-6 轮实验：4 keep + 1 revert + 1 基线。
+剩余 4 维 (dim5/dim2/dim7/dim3) 留作下一轮评估，原因：
+- SKILL.md 已 300 行 = Constraint 4 budget ceiling
+- 继续需先将部分内容移到 references/ 才能给其他 dim 留空间
+- 触顶信号表明已接近 v2.0 9-dim 框架下 skill-forge 的局部最优
 
 可选方向：
-- **继续 Round 7**: 冲击 86+（dim4 检查点主观性改进，或 dim8 实测再验证）
-- **Finalize**: 合并分支 `auto-optimize/20260504-skill-forge` 到 master
+- **继续 v2.0 优化**: Round 3+ 之前先把当前内容分块移到 references/ (释放 SKILL.md 空间)
+- **Phase 2.5 探索性重写**: 从头重写 SKILL.md 而不是微调（解锁局部最优）
+- **Finalize**: 合并分支 `auto-optimize/20260605-skill-forge-v2` 到 master
 
-历史峰值参考：89.5 (commit `41f2f3a`, 2026-05-02, 但不在当前 git 历史中)
+历史峰值参考：89.5 (commit `41f2f3a`, 2026-05-02, v1 darwin 8-dim, **rubric 不同不可直接比**)
 
 ## History
 
@@ -64,12 +80,22 @@ None.
 | 2026-05-04 | Round 4: 补充 eval 执行具体命令 | **84.4** | `ba83b65` |
 | 2026-05-04 | Round 5: 扩展边界条件（manifest 失败 + 用户拒绝） | **84.9** | `ed069c0` |
 | 2026-05-04 | Round 6: 为 6 个核心脚本补充 docstring | **85.2** | `554bcdf` |
+| 2026-06-05 | **v2.0 darwin re-assess baseline (9-dim)** | **83.0** | `2246b41` |
+| 2026-06-05 | Round 1: dim9 (anti-patterns) add dedicated section | 84.0 | `eabfd46` |
+| 2026-06-05 | Round 2: dim1 (frontmatter) remove redundant summary | **84.5** | `acbf9e4` |
 
 ## Lessons Learned (2026-05-04)
 
 1. **元 skill 评估必须扫描自身设计哲学**：Round 2 被 revert 的根因是未在优化前重读 v2 改进总结中"不加检查点"的明确决策。优化者（agent）与评估者应为不同上下文。
 2. **Constraint 形式 ≠ 设计意图合规**：即使使用 Constraint 语言写 "must not proceed without confirmation"，如果 skill 的设计哲学是 "不加检查点、agent 自主决策"，该约束仍属违规。
 3. **基线评估的扣分理由需复核**：dim4 基线 7.0 的扣分理由 "缺少人在回路" 与 v2 设计意图冲突，不应作为缺陷。
+
+## Lessons Learned (2026-06-05 v2.0)
+
+4. **v2.0 dim4 评估 skill-forge 必然低分**：skill-forge "不加检查点" 是非协商项；v2.0 dim4 强制要求 🔴/STOP/CHECKPOINT — 直接冲突。2/6 是诚实评分，不应作为改进方向。
+5. **见好就收信号准确**：连续 2 轮 Δ<2.0 (R1=+1.0, R2=+0.5) → 触顶，表明已接近局部最优。继续调整风险 > 收益。
+6. **SKILL.md 行数预算会先于 ROI 见顶**：v2.0 dim9 加 19 行让 SKILL.md 281→300，触及 Constraint 4 ceiling。剩余优化需先腾空间。
+7. **v1 ↔ v2 分数不可直接比**：rubric 变了 (8→9 维, 权重不同, dim4 独立)，85.2 (v1) 和 84.5 (v2) 不是同一量度。v2 的实际进步是 +1.5 (83.0→84.5)。
 
 ## Design Decisions (Non-Negotiable)
 
@@ -91,3 +117,5 @@ None.
 - Skill-forge constraints: `E:/cs1/.opencode/skills/custom/skill-forge/AGENTS.md`
 - Skill-forge SKILL.md: `E:/cs1/.opencode/skills/custom/skill-forge/SKILL.md`
 - Darwin-skill results: `E:/cs1/.opencode/skills/custom/darwin-skill/results.tsv`
+- v2.0 result card (this run): `F:\tmp\darwin-archived-2026-06-05\result-cards\skill-forge-v2.0.html`
+- v1 result card (archived): `F:\tmp\darwin-archived-2026-06-05\skill-forge-result-card.html`
