@@ -1,6 +1,6 @@
 ---
 name: skill-forge
-description: Forge, scaffold, package, and retire production-grade agent skills with eval gates and team governance. Use when building a skill for team reuse, running structured evals with pass/fail gates, deciding whether a skill should be retired, or packaging skills for distribution. Covers the full lifecycle with Go/No-Go assessment, phased design, iterative evaluation, and production governance. For quick personal skills or MCP integration guidance, see skill-creator. For optimizing an existing skill's quality via autonomous experiments, use darwin-skill. For architecture-only questions (which pattern to use), see skill-architect.
+description: Forge, scaffold, package, and retire production-grade agent skills with eval gates and team governance. Use when building a skill for team reuse, running structured evals with pass/fail gates, deciding whether a skill should be retired, or packaging skills for distribution. For quick personal skills or MCP integration guidance, see skill-creator. For optimizing an existing skill's quality via autonomous experiments, use darwin-skill. For architecture-only questions (which pattern to use), see skill-architect.
 license: MIT
 metadata:
   version: "1.3.0"
@@ -237,6 +237,25 @@ Pay attention to context cues. Briefly explain terms if uncertain. See [Communic
 | Retirement check inconclusive | Phase 3 retirement criteria | Present ambiguous evidence, recommend human judgment. Default to **keep** unless evidence is strong. |
 | User rejects all mode suggestions | Phase 1 Go/NoGo < 2 or user disagrees with assessment | Present alternatives (script, alias, prompt template). Do NOT force Scaffold as fallback — respect user's choice to not build a skill. |
 | Manifest packaging fails | Phase 5 `manifest.json` invalid or `.skill` build errors | Report specific validation errors, suggest fixes, remain in Phase 4 until resolved. Do NOT ship broken package. |
+
+## Anti-Patterns to Avoid
+
+Skills produced under skill-forge must not exhibit these patterns. **Scan this list before delivering any output.**
+
+| Anti-Pattern | Why It Hurts | Required Action |
+|---|---|---|
+| **Numbered step sequences** ("Step 1: ... Step 2: ...") | Prevents agent adaptation and error recovery | Use Outcome / Constraints / Signals; push exact sequences to `scripts/` |
+| **Agent-pause-for-confirmation** ("wait for user", "ask before continuing") | Contradicts the no-checkpoint design philosophy (see [STATE.md Design Decisions](STATE.md)) | Use Go/No-Go conditions, signals, and gates — never agent-pauses |
+| **Fiddly micro-instructions** ("use exactly 2 spaces", "always rename this way") | Overfits to test cases, brittle across users | Push preferences to `references/` |
+| **Trivia in instructions** ("API was introduced in v1.2") | Agent cannot act on historical context | Cut. Keep only "why" that informs decisions |
+| **Claim gate passed when it failed** | Hides real defects from user | Report failure, return to earlier phase, never ship |
+| **Ship broken package** (passing `validate_skill.py` skipped or overridden) | User receives broken artifact | Resolve every validation error before `Phase 5` |
+
+**Full general-purpose table** (overfitting, dictating tool order, etc.): see [Goal vs Procedure → Anti-Patterns](references/goal-vs-procedure.md#anti-patterns-to-avoid).
+
+**Self-check before delivery**: Does your draft trigger any row above? If yes, refactor before producing output.
+
+---
 
 ## Output Contract
 
