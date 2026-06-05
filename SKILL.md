@@ -1,6 +1,6 @@
 ---
 name: skill-forge
-description: Forge, scaffold, package, and retire production-grade agent skills with eval gates and team governance. Use when building a skill for team reuse, running structured evals with pass/fail gates, deciding whether a skill should be retired, or packaging skills for distribution. Covers the full lifecycle with Go/No-Go assessment, phased design, iterative evaluation, and production governance. For quick personal skills or MCP integration guidance, see skill-creator. For optimizing an existing skill's quality via autonomous experiments, use darwin-skill. For architecture-only questions (which pattern to use), see skill-architect.
+description: Forge, scaffold, package, and retire production-grade agent skills with eval gates and team governance. Use when building a skill for team reuse, running structured evals with pass/fail gates, deciding whether a skill should be retired, or packaging skills for distribution. For quick personal skills or MCP integration guidance, see skill-creator. For optimizing an existing skill's quality via autonomous experiments, use darwin-skill. For architecture-only questions (which pattern to use), see skill-architect.
 license: MIT
 metadata:
   version: "1.3.0"
