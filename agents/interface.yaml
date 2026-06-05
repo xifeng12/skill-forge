@@ -1,0 +1,78 @@
+# Skill Forge Interface Configuration
+# This file configures the skill's agent interface and evolution behavior
+
+name: skill-forge
+version: "2.0.0"
+mode: library
+
+interface:
+  inputs:
+    - name: intent
+      type: string
+      required: true
+      description: "What the skill should do, trigger phrases, expected output"
+    - name: existing_skill
+      type: path
+      required: false
+      description: "Path to existing skill for improvement mode"
+    - name: mode
+      type: enum
+      values: [scaffold, production, library]
+      default: scaffold
+      description: "Operating mode determining gate strictness"
+
+  outputs:
+    - name: skill_directory
+      type: directory
+      description: "Complete skill package with SKILL.md"
+    - name: eval_report
+      type: file
+      description: "Evaluation results with benchmarks"
+    - name: package
+      type: file
+      description: "Packaged .skill file for distribution"
+    - name: evolution_history
+      type: file
+      description: "Evolution history with scores and changes"
+
+  gates:
+    - name: lint
+      script: scripts/lint_skill.py
+      required_for: [scaffold, production, library]
+    - name: trigger_eval
+      script: scripts/trigger_eval.py
+      required_for: [production, library]
+    - name: resource_boundary
+      script: scripts/resource_boundary_check.py
+      required_for: [library]
+    - name: governance
+      script: scripts/governance_check.py
+      required_for: [library]
+    - name: blind_eval
+      script: scripts/judge_blind_eval.py
+      required_for: [library]
+      recommended_for: [production]
+
+evolution:
+  auto_rounds: 3
+  target_score: 80
+  max_rounds: 10
+  confirm_mode: "batch"
+  stagnation_limit: 2
+  commit_prefix: "evolve:"
+
+scoring:
+  Scaffold:
+    dimensions: [trigger_accuracy, execution_reliability, boundary_clarity, context_efficiency]
+    pass_threshold: 64
+  Production:
+    dimensions: [trigger_accuracy, execution_reliability, boundary_clarity, context_efficiency, documentation, error_handling]
+    pass_threshold: 69
+  Library:
+    dimensions: [trigger_accuracy, execution_reliability, boundary_clarity, context_efficiency, documentation, error_handling, portability, governance_maturity]
+    pass_threshold: 75
+
+output:
+  history_file: "reports/evolution_history.json"
+  ratchet_file: "reports/.ratchet_state.json"
+  generate_report: true

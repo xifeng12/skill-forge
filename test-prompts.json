@@ -1,0 +1,17 @@
+[
+  {
+    "id": 1,
+    "prompt": "帮我设计一个能自动整理笔记的 skill",
+    "expected": "应触发 skill-forge Phase 1，捕获意图（笔记整理），判断应为 Capability skill，选择 archetype，设计 frontmatter 和 workflow"
+  },
+  {
+    "id": 2,
+    "prompt": "这个 skill 需要调用外部 API，还要处理认证失败的情况",
+    "expected": "应在设计阶段识别外部依赖，在边界条件中覆盖认证失败、超时、重试策略，选择 Production 模式并设置相应 gate"
+  },
+  {
+    "id": 3,
+    "prompt": "我不确定这个功能该不该做成 skill，帮我判断一下",
+    "expected": "应先运行 Non-Skill Decision Tree 判断是否值得做成 skill，而非直接进入 scaffold 流程"
+  }
+]

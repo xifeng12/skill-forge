@@ -1,0 +1,63 @@
+{
+  "positive_concepts": {
+    "forge_intent": {
+      "phrases": ["forge a skill", "skill forge", "forge workflow", "forging a skill"],
+      "weight": 0.9
+    },
+    "build_skill": {
+      "phrases": ["build a skill", "create a skill", "make a skill", "scaffold a skill", "new skill", "building a skill", "creating a skill", "making a skill"],
+      "weight": 0.7
+    },
+    "team_reuse": {
+      "phrases": ["team reuse", "share with team", "production skill", "for my team", "team use"],
+      "weight": 0.8
+    },
+    "packaging": {
+      "phrases": ["package a skill", "ship a skill", "distribute a skill", "packaging a skill", "distribution"],
+      "weight": 0.8
+    },
+    "evaluation": {
+      "phrases": ["evaluate a skill", "run evals", "gate check", "pass fail", "blind eval", "functional eval", "trigger accuracy", "trigger eval"],
+      "weight": 0.7
+    },
+    "retirement": {
+      "phrases": ["retire a skill", "decommission a skill", "should i retire", "retirement check", "retiring a skill"],
+      "weight": 0.6
+    },
+    "governance": {
+      "phrases": ["governance compliance", "governance check", "version bump", "changelog update"],
+      "weight": 0.5
+    }
+  },
+  "negative_concepts": {
+    "architecture_question": {
+      "phrases": ["skill architecture", "skill pattern", "design pattern", "which pattern", "what pattern", "file structure"],
+      "weight": 0.4,
+      "exclusive": true
+    },
+    "darwin_intent": {
+      "phrases": ["auto optimize", "darwin skill", "darwin", "autonomous optimization", "darwin optimize"],
+      "weight": 0.5,
+      "exclusive": true
+    },
+    "creator_intent": {
+      "phrases": ["quick skill", "personal skill", "just for me", "nothing fancy", "simple personal skill"],
+      "weight": 0.3,
+      "exclusive": true
+    },
+    "one_off": {
+      "phrases": ["just this once", "one time task", "one off task", "ad hoc script"],
+      "weight": 0.2,
+      "exclusive": true
+    },
+    "summary": {
+      "phrases": ["summarize this", "give me a summary", "sum up"],
+      "weight": 0.15
+    },
+    "general_coding": {
+      "phrases": ["fix the bug", "write code for", "add a feature", "refactor this code"],
+      "weight": 0.05
+    }
+  },
+  "fallback_positive_concepts": ["build_skill", "forge_intent"]
+}

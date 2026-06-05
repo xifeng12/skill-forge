@@ -1,0 +1,34 @@
+{
+  "skill_name": "skill-forge",
+  "recommended_threshold": 0.48,
+  "should_trigger": [
+    "帮我做一个新的skill，给团队用的审批流程",
+    "I want to build a skill for team reuse with eval gates",
+    "如何打包一个skill分发给团队？",
+    "评估一下这个skill的触发准确率，然后帮我看要不要退役",
+    "帮我把这个skill从 scaffold 升级到 production，加上 evals",
+    "create a skill with pass/fail gates and package it",
+    "这个skill已经没人用了，帮我判断一下是不是该退役",
+    "forge a new skill for our team's deployment workflow",
+    "帮我给这个生产skill加上盲评和资源边界检查",
+    "I need to scaffold a skill for governance compliance"
+  ],
+  "should_not_trigger": [
+    "帮我总结一下这个Markdown文件的内容",
+    "fix the bug in the user authentication module",
+    "帮我翻译这段代码的注释",
+    "这个skill的架构应该用什么设计模式？pipeline还是generator？",
+    "用darwin-skill帮我优化一下这个skill的质量",
+    "just this once, write a quick script to rename files",
+    "I want to create a simple personal skill, nothing fancy",
+    "帮我快速做一个个人用的备忘录skill，不需要什么eval和gate",
+    "the code review found issues in the PR, can you fix them?",
+    "add a feature to handle file uploads in the web app"
+  ],
+  "near_neighbor": [
+    {"text": "我想做一个skill，但不知道从哪开始", "family": "intent-unclear"},
+    {"text": "这个skill触发率太低了，帮我改进", "family": "optimization-ambiguous"},
+    {"text": "帮我设计一个skill的架构和文件结构", "family": "architect"},
+    {"text": "evaluate whether this workflow should be a skill or a script", "family": "decision-tree"}
+  ]
+}
