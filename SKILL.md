@@ -36,6 +36,7 @@ Skills fall into two categories with different lifecycles. See [Skill Types](ref
 - Keep `SKILL.md` to routing plus the minimal execution skeleton.
 - Push long guidance to `references/`, deterministic logic to `scripts/`.
 - Use the lightest process that still makes the skill reliable.
+- Treat shared modules such as `risk-class.md` as versioned contracts. Any change to risk dimensions, severity thresholds, or automation-level implications requires reviewing declared dependents before the change is accepted.
 
 ## Modes
 
