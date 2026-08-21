@@ -1,0 +1,95 @@
+{
+  "skill": "external-knowledge",
+  "version": "0.1.0",
+  "mode": "Scaffold",
+  "purpose": "Validate semantic triggering, source ownership, gap-based escalation, and stop behavior across simple and specialist external-knowledge tasks.",
+  "cases": [
+    {
+      "id": "E1",
+      "name": "simple-current-product-change",
+      "prompt": "查询一下 OpenCode Go 套餐最近有什么变化。",
+      "expect_trigger": true,
+      "expected_source_semantics": ["authoritative current state", "historical change if needed"],
+      "expected_initial_owner": "official/current Web",
+      "forbidden_without_gap": ["WeChat discovery", "Exa", "Firecrawl"],
+      "stop_condition": "Current state and requested change are supported well enough to answer; do not broaden into product research."
+    },
+    {
+      "id": "E2",
+      "name": "implicit-wechat-longform-discovery",
+      "prompt": "我记得前段时间有人写过一篇中文长文，详细比较 OpenCode Go 和其他编码套餐，帮我找一下。",
+      "expect_trigger": true,
+      "expected_source_semantics": ["Chinese long-form article discovery", "WeChat article discovery is high-fit"],
+      "expected_behavior": "Consider the WeChat discovery specialist even though the prompt does not literally say 微信 or 公众号. General Web may also be used if needed, but WeChat must not be excluded by keyword-only routing.",
+      "stop_condition": "Return plausible article candidates once the discovery request is satisfied; do not read every article unless content is requested."
+    },
+    {
+      "id": "E3",
+      "name": "explicit-wechat-discovery",
+      "prompt": "找一下微信公众号里关于 Agent Skill、hooks 和 subagent 关系的文章，给我几个候选。",
+      "expect_trigger": true,
+      "expected_initial_owner": "WeChat discovery specialist",
+      "expected_behavior": "Discover candidates and stop after a useful list; do not invoke the reader for all candidates.",
+      "stop_condition": "Candidate list with enough metadata/links to satisfy discovery."
+    },
+    {
+      "id": "E4",
+      "name": "canonical-wechat-read",
+      "prompt": "阅读这篇文章并总结核心观点：https://mp.weixin.qq.com/s/cexkyzQBRDG3uIF6g5cEbQ",
+      "expect_trigger": true,
+      "expected_initial_owner": "WeChat reader specialist",
+      "expected_behavior": "Use the reader if available because article body is required; do not rediscover the article through search first.",
+      "stop_condition": "Article body is read and summarized with source-grounded claims."
+    },
+    {
+      "id": "E5",
+      "name": "versioned-docs-owner",
+      "prompt": "React 19.2 的 useEffectEvent 当前官方语义是什么？",
+      "expect_trigger": true,
+      "expected_initial_owner": "Context7 or equivalent version-aware docs specialist",
+      "forbidden_without_gap": ["broad Web research", "WeChat", "Firecrawl"],
+      "stop_condition": "Version-specific documentation resolves the API semantics."
+    },
+    {
+      "id": "E6",
+      "name": "github-native-owner",
+      "prompt": "看一下某个 GitHub PR 为什么把这个接口改掉了，结合 PR、review 和 commit 历史解释。",
+      "expect_trigger": true,
+      "expected_initial_owner": "GitHub-native connector/plugin",
+      "expected_behavior": "Use repository-native evidence rather than treating GitHub only as ordinary webpages.",
+      "stop_condition": "PR/review/commit evidence explains the change well enough."
+    },
+    {
+      "id": "E7",
+      "name": "stable-general-knowledge-no-trigger",
+      "prompt": "B-tree 是什么？",
+      "expect_trigger": false,
+      "expected_behavior": "Answer from stable knowledge unless the user asks for current/version-specific/source-grounded information."
+    },
+    {
+      "id": "E8",
+      "name": "provided-context-no-trigger",
+      "prompt": "根据我刚才贴出来的 SQL，解释这 4 个 WITH 为什么可以删除数据。",
+      "expect_trigger": false,
+      "expected_behavior": "Use the provided context; do not retrieve external information unless a missing fact is genuinely required."
+    },
+    {
+      "id": "E9",
+      "name": "precision-gap-challenger",
+      "prompt": "查一个很具体的冷门技术事实；先用普通 Web，如果结果无法精确定位，再决定是否升级到精确搜索。",
+      "expect_trigger": true,
+      "expected_initial_owner": "general Web",
+      "expected_behavior": "Use Exa or equivalent only after recording an observable precision gap; do not call it by default.",
+      "stop_condition": "The exact fact is located with sufficient evidence."
+    },
+    {
+      "id": "E10",
+      "name": "extraction-gap-optional-challenger",
+      "prompt": "读取一个已知网页；如果普通抓取拿不到正文，再尝试可用的提取后端。",
+      "expect_trigger": true,
+      "expected_initial_owner": "ordinary Web fetch",
+      "expected_behavior": "Escalate to Firecrawl or equivalent only after an observed extraction gap and only if available. Absence of Firecrawl is not permission to install it.",
+      "stop_condition": "Required content is obtained, or the runtime limitation is stated after available fallbacks are exhausted."
+    }
+  ]
+}
