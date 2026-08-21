@@ -1,0 +1,3 @@
+display_name: External Knowledge
+short_description: Retrieve current external information with semantic source routing and minimum-sufficient evidence.
+default_prompt: Use $external-knowledge to answer the user's current or source-grounded question by choosing the best source semantically, escalating only for an observed gap, and stopping when evidence is sufficient.

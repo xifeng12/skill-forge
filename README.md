@@ -32,6 +32,10 @@ Phase 5: Package & Ship     →  manifest.json + .skill file
 - New **Gate 5** in Phase 4: `scripts/gotchas_check.py` verifies every NOT-instruction in SKILL.md has a matching gotcha entry
 - New Reference Map entries for `Gotchas Template` and `Content Quality`
 
+## Experimental validation samples
+
+- [`skills/external-knowledge`](skills/external-knowledge/) — v0.1 experimental capability skill that validates semantic triggering, source-semantics routing, specialist ownership, gap-based escalation, WeChat semantic discovery, and minimum-sufficient STOP behavior. The first runtime profile targets ZCode and treats Firecrawl as optional/unavailable rather than reinstalling it for the test.
+
 ## Repo layout
 
 ```
@@ -42,6 +46,8 @@ skill-forge/
 ├── manifest.json
 ├── README.md
 ├── LICENSE
+├── skills/
+│   └── external-knowledge/     # experimental validation sample
 ├── references/
 │   ├── anthropic-content-quality.md
 │   ├── gotchas-template.md
