@@ -12,9 +12,9 @@ Format:
   - Status: OPEN | RESOLVED in vX.X
 
 Rules:
-- Append only. Never delete.
+- Lifecycle: OPEN | RESOLVED in vX.X | SCOPED | RETIRED | REMOVED; state changes as evidence changes. Version control preserves history; stale entries may be retired or removed from the active file.
 - Mark resolved entries with version number.
-- Minimum 2 entries before a skill reaches Production mode.
+- Minimum 2 entries before a skill reaches Production mode where legitimate failure evidence exists; otherwise record `NOT_RUN_NO_VALID_FIXTURE` and do not fabricate entries.
 - Use sequential IDs: G-1-001, G-1-002, etc.
 -->
 

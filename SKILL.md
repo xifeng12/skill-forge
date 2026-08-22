@@ -56,6 +56,8 @@ Any phase may abort if the user says "stop" or intent changes fundamentally.
 | Phase 3 → 4 | Eval iteration converged (feedback empty or user satisfied) |
 | Phase 4 → 5 | ALL gates pass. If any gate fails, return to Phase 3 or 2. |
 
+Phase completion is never authorization to enter a later mutation phase (packaging, publishing, installation); every transition still requires the user's go-ahead.
+
 ---
 
 ### Phase 1: Capture & Design
@@ -96,7 +98,7 @@ No-Go (−2 each, hard stop if ≥ 2):
 **Outcome**: SKILL.md draft + `evals/evals.json` + eval workspace aligned to mode.
 
 **Constraints**:
-- Minimum 2 test cases covering realistic scenarios.
+- Minimum 2 test cases covering realistic scenarios where legitimate fixtures exist. If no real fixture exists, record `NOT_RUN_NO_VALID_FIXTURE` instead of fabricating one to satisfy coverage.
 - Workspace structure must match the template in `references/iteration-workflow.md`.
 - Gate selection must match mode:
   - **Scaffold**: description lint + basic trigger eval only.
@@ -124,9 +126,10 @@ No-Go (−2 each, hard stop if ≥ 2):
 
 **Constraints**:
 - Spawn with-skill AND baseline runs in parallel.
+- Real-work runtime cases are valid eval evidence: a documented real case can complement or replace a synthetic benchmark case when no legitimate synthetic fixture exists.
 - Draft assertions while runs complete, then grade and aggregate.
 - Launch eval viewer for human review before proceeding.
-- Repeat iteration until user is satisfied or feedback is empty.
+- Repeat iteration until user is satisfied or feedback is empty, with an Evidence STOP: before another iteration, name what it could change (conclusion, risk, or next action); if it cannot change anything, stop.
 
 **Gotchas 提炼** (run after each eval iteration):
 
@@ -141,7 +144,7 @@ From failed cases in `benchmark.json`, extract structured Gotchas into `referenc
   - Status: OPEN | RESOLVED in vX.X
 ```
 
-Gotchas.md is append-only. Mark resolved entries — never delete them. This file accumulates institutional knowledge across all versions.
+Gotchas entries have a lifecycle: `OPEN → RESOLVED → SCOPED / RETIRED / REMOVED` as evidence changes. Version control preserves history; stale entries may be retired or removed from the active file. Do not keep a superseded gotcha in the active file forever merely for history.
 
 Load `references/anthropic-content-quality.md` for content quality rules to apply during extraction.
 
